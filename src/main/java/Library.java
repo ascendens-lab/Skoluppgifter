@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Library {
-    static Book[] BookArray = new Book[15];
+    static Book[] BookArray = new Book[11];
     static Member[] MemberArray = new Member[15];
 
     static void main(){
@@ -53,8 +53,7 @@ public class Library {
 
 
     private static void showStatus() {
-        for (int i =0, i < BookArray.length, i++)
-        IO.println(BookArray[i]);
+
     }
 
     private static void searchBook() {
@@ -90,9 +89,16 @@ public class Library {
 
     }
 
-    static void addBook(){
+    static void addBook() {
+
 
         int index = findNull();
+       if(index == -1){
+           IO.println("Bokhyllan är full");
+           return;
+       }
+
+
 
         IO.print("Ange titel på boken:  ");
         String title = textInput();
@@ -101,21 +107,31 @@ public class Library {
         String author = textInput();
 
         IO.print("Ange utgivningsår för boken:  ");
-        int published = Integer.parseInt(textInput());
+        int published;
 
-            BookArray[index] = new Book(title,author,published,false);
+        try {
+            published = Integer.parseInt(textInput());
+        } catch (NumberFormatException e) {
+            IO.println("Du måste ange ett år med siffror.");
+            return;
+        }
+        published = Integer.parseInt(textInput());
 
-                IO.println(index);
 
 
-            }
+        BookArray[index] = new Book(title, author, published, false);
+
+        IO.println(index);
+    }
 
     private static int findNull() {
+
+
         for (int i = 0; i < BookArray.length; i++) {
             if (BookArray[i]== null){
                  return i;
+                             }
 
-            }
 
 
         }
