@@ -2,7 +2,10 @@ import java.util.Scanner;
 
 public class Library {
     static Book[] BookArray = new Book[15];
+    static Member[] MemberArray = new Member[15];
+
     static void main(){
+
         bookShelf();
 
 
@@ -23,7 +26,7 @@ public class Library {
 
             switch (input){
                 case "1" -> addBook();
-                case "2" ->  registrerMember();
+                case "2" ->  registerMember();
                 case "3" -> borrowBook();
                 case "4" -> returnBook();
                 case "5" -> searchBook();
@@ -37,8 +40,6 @@ public class Library {
         } while (!input.equals("e"));
 
         textInput();
-
-
     }
 
 
@@ -52,6 +53,8 @@ public class Library {
 
 
     private static void showStatus() {
+        for (int i =0, i < BookArray.length, i++)
+        IO.println(BookArray[i]);
     }
 
     private static void searchBook() {
@@ -63,7 +66,28 @@ public class Library {
     private static void borrowBook() {
     }
 
-    private static void registrerMember() {
+    private static void registerMember() {
+        int index =0;
+        for (int i = 0; i < MemberArray.length; i++) {
+            if (MemberArray[i] == null) {
+                index = i;
+                break;
+            }
+        }
+
+        IO.print("Förnamn: ");
+        String firstName = textInput();
+        IO.print("Efternamn: ");
+        String surName = textInput();
+        IO.print("Personnummer: ");
+        String identityNumber = textInput();
+
+         MemberArray[index] = new Member(firstName,surName,identityNumber);
+
+
+        IO.println(MemberArray [0]);
+        IO.println("medlem direkt: " + MemberArray[index]);
+
     }
 
     static void addBook(){
@@ -119,7 +143,11 @@ public class Library {
 
 
 
+    record Member(String firstName,String Surname, String identityNumber){
 
+
+
+    }
 
    record Book(String title, String author, int published, boolean borrowed){
 
