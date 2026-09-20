@@ -1,16 +1,17 @@
+import java.util.Locale;
 import java.util.Scanner;
+
+
 
 public class Library {
     static Book[] BookArray = new Book[11];
-    static Member[] MemberArray = new Member[15];
+    static Member[] MemberArray = new Member[2];
 
     static void main(){
 
         bookShelf();
 
-
         String input;
-
         do{
             IO.println("Bibliotekshanteraren");
             IO.println("====================");
@@ -39,24 +40,43 @@ public class Library {
 
         } while (!input.equals("e"));
 
-        textInput();
+        Input();
     }
 
-
-
-    private static String textInput() {
+    private static String Input() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         return input;
 
     }
 
-
     private static void showStatus() {
+
+
 
     }
 
     private static void searchBook() {
+
+        boolean found = false;
+        IO.print("Sök på titel eller författare: ");
+        String search = (Input().toLowerCase(Locale.ROOT));
+
+
+
+        for (int i = 0; i<BookArray.length; i++){
+            if (BookArray[i] != null && BookArray[i].title().toLowerCase(Locale.ROOT).contains(search)
+                    || BookArray[i] != null && BookArray[i].author().toLowerCase(Locale.ROOT).contains(search))
+            {
+                IO.println(BookArray[i]);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            IO.println("Boken kunde inte hittas.");
+        }
+
     }
 
     private static void returnBook() {
@@ -72,20 +92,32 @@ public class Library {
                 index = i;
                 break;
             }
+            else
+                index = -1;
+
+        }
+
+        if (index== -1){
+            IO.print("Medlemslistan är full.");
+            return;
         }
 
         IO.print("Förnamn: ");
-        String firstName = textInput();
+        String firstName = Input();
         IO.print("Efternamn: ");
-        String surName = textInput();
+        String surName = Input();
         IO.print("Personnummer: ");
-        String identityNumber = textInput();
+        int identityNumber;
+
+        try {
+            identityNumber = Integer.parseInt(Input());
+        } catch (NumberFormatException e) {
+            IO.println("Personnumret måste anges med siffror.");
+            return;
+        }
+
 
          MemberArray[index] = new Member(firstName,surName,identityNumber);
-
-
-        IO.println(MemberArray [0]);
-        IO.println("medlem direkt: " + MemberArray[index]);
 
     }
 
@@ -98,34 +130,26 @@ public class Library {
            return;
        }
 
-
-
         IO.print("Ange titel på boken:  ");
-        String title = textInput();
+        String title = Input();
 
         IO.print("Ange författare till boken:  ");
-        String author = textInput();
+        String author = Input();
 
         IO.print("Ange utgivningsår för boken:  ");
         int published;
 
         try {
-            published = Integer.parseInt(textInput());
+            published = Integer.parseInt(Input());
         } catch (NumberFormatException e) {
-            IO.println("Du måste ange ett år med siffror.");
+            IO.println("Du måste ange år med siffror.");
             return;
         }
-        published = Integer.parseInt(textInput());
-
-
 
         BookArray[index] = new Book(title, author, published, false);
-
-        IO.println(index);
-    }
+            }
 
     private static int findNull() {
-
 
         for (int i = 0; i < BookArray.length; i++) {
             if (BookArray[i]== null){
@@ -159,7 +183,7 @@ public class Library {
 
 
 
-    record Member(String firstName,String Surname, String identityNumber){
+    record Member(String firstName,String Surname, int identityNumber){
 
 
 
