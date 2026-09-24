@@ -1,11 +1,11 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-
-
 public class Library {
-    static Book[] BookArray = new Book[11];
-    static Member[] MemberArray = new Member[2];
+    static Book[] bookArray = new Book[11];
+    static Member[] memberArray = new Member[2];
+    static boolean[] borrowedArray = new boolean[11];
+
 
     static void main(){
 
@@ -27,7 +27,7 @@ public class Library {
 
             switch (input){
                 case "1" -> addBook();
-                case "2" ->  registerMember();
+                case "2" -> registerMember();
                 case "3" -> borrowBook();
                 case "4" -> returnBook();
                 case "5" -> searchBook();
@@ -51,6 +51,17 @@ public class Library {
     }
 
     private static void showStatus() {
+        for (int i = 0; i< bookArray.length-1; i++) {
+            String status;
+            if (borrowedArray[i] == false)
+               status  = "inne.";
+            else
+                status = "utlånad.";
+
+
+            IO.println("Boken " + bookArray[i].title() + " är " + status);
+
+        }
 
 
 
@@ -64,11 +75,11 @@ public class Library {
 
 
 
-        for (int i = 0; i<BookArray.length; i++){
-            if (BookArray[i] != null && BookArray[i].title().toLowerCase(Locale.ROOT).contains(search)
-                    || BookArray[i] != null && BookArray[i].author().toLowerCase(Locale.ROOT).contains(search))
+        for (int i = 0; i<bookArray.length; i++){
+            if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search)
+                    || bookArray[i] != null && bookArray[i].author().toLowerCase(Locale.ROOT).contains(search))
             {
-                IO.println(BookArray[i]);
+                IO.println(bookArray[i]);
                 found = true;
             }
         }
@@ -82,13 +93,19 @@ public class Library {
     private static void returnBook() {
     }
 
-    private static void borrowBook() {
-    }
+
+    private static  void borrowBook(){
+
+
+
+
+
+ }
 
     private static void registerMember() {
         int index =0;
-        for (int i = 0; i < MemberArray.length; i++) {
-            if (MemberArray[i] == null) {
+        for (int i = 0; i < memberArray.length; i++) {
+            if (memberArray[i] == null) {
                 index = i;
                 break;
             }
@@ -117,7 +134,8 @@ public class Library {
         }
 
 
-         MemberArray[index] = new Member(firstName,surName,identityNumber);
+
+
 
     }
 
@@ -146,13 +164,12 @@ public class Library {
             return;
         }
 
-        BookArray[index] = new Book(title, author, published, false);
+        bookArray[index] = new Book(title, author, published);
             }
+            private static int findNull() {
 
-    private static int findNull() {
-
-        for (int i = 0; i < BookArray.length; i++) {
-            if (BookArray[i]== null){
+        for (int i = 0; i < bookArray.length; i++) {
+            if (bookArray[i]== null){
                  return i;
                              }
 
@@ -165,32 +182,22 @@ public class Library {
 
     static void bookShelf( ) {
 
-        BookArray[0] = (new Book("1984", "George Orwell", 1949, false));
-        BookArray[1] = (new Book("Dumskallarnas sammanvärjning", "John Kennedy Toole", 1980, false));
-        BookArray[2] = (new Book("Mörkrets hjärta", "Joseph Conrad", 1899, false));
-        BookArray[3] = (new Book("Röda rummet", "August Strindberg", 1879, false));
-        BookArray[4] = (new Book("Harry Potter och de vises sten", "J.K. Rowling", 1997, false));
-        BookArray[5] = (new Book("Sagan om ringen", "J.R.R. Tolkien", 1954, false));
-        BookArray[6] = (new Book("Portnoys besvär", "Philip Roth", 1969, false));
-        BookArray[7] = (new Book("Brott och straff", "Fjodor Dostojevskij", 1866, false));
-        BookArray[8] = (new Book("Mästaren och Margarita", "Michail Bulgakov", 1967, false));
-        BookArray[9] = (new Book("En julsaga", "Charles Dickens", 1843, false));
-
-
-
+        bookArray[0] = (new Book("1984", "George Orwell", 1949));
+        bookArray[1] = (new Book("Dumskallarnas sammanvärjning", "John Kennedy Toole", 1980));
+        bookArray[2] = (new Book("Mörkrets hjärta", "Joseph Conrad", 1899));
+        bookArray[3] = (new Book("Röda rummet", "August Strindberg", 1879));
+        bookArray[4] = (new Book("Harry Potter och de vises sten", "J.K. Rowling", 1997));
+        bookArray[5] = (new Book("Sagan om ringen", "J.R.R. Tolkien", 1954));
+        bookArray[6] = (new Book("Portnoys besvär", "Philip Roth", 1969));
+        bookArray[7] = (new Book("Brott och straff", "Fjodor Dostojevskij", 1866));
+        bookArray[8] = (new Book("Mästaren och Margarita", "Michail Bulgakov", 1967));
+        bookArray[9] = (new Book("En julsaga", "Charles Dickens", 1843));
 
     }
 
 
+    record Member(String firstName,String Surname, int identityNumber){}
 
-    record Member(String firstName,String Surname, int identityNumber){
-
-
-
-    }
-
-   record Book(String title, String author, int published, boolean borrowed){
+    record Book(String title, String author, int published){}
 
     }
-
-}
