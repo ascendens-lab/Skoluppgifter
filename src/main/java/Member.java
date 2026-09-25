@@ -1,21 +1,21 @@
 public class Member {
 
-    private String firstNname;
+    private String firstName;
     private String  surName;
-    private int id;
+    private int memberID;
 
 
 
-    public Member(String f,String s,int id){
-        this.firstNname=f;
+    public Member(String f,String s,int memberID){
+        this.firstName=f;
         this.surName=s;
-        this.id= id;
+        this.memberID= memberID;
 
 
     }
 
     public String getFirstname(){
-        return firstNname;
+        return firstName;
 
     }
 
@@ -23,13 +23,11 @@ public class Member {
         return  surName;
     }
 
-    public int getid(){
-        return id;
+    public int getID(){
+        return memberID;
     }
 
-
-
-}
+   }
 
 
 
