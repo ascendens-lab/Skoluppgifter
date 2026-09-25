@@ -5,6 +5,8 @@ public class Library {
     static Book[] bookArray = new Book[11];
     static Member[] memberArray = new Member[10];
     static int memberID = 1;
+    static int index =0;
+
 
     static boolean[] borrowedArray = new boolean[11];
 
@@ -110,23 +112,14 @@ public class Library {
 
 
  }
-
     private static void registerMember() {
-        int index =0;
+
 
         for (int i = 0; i < memberArray.length; i++) {
             if (memberArray[i] == null) {
                 index = i;
                 break;
             }
-            else
-                index = -1;
-
-        }
-
-        if (index== -1){
-            IO.print("Medlemslistan är full.");
-            return;
         }
 
         IO.print("Förnamn: ");
@@ -134,12 +127,11 @@ public class Library {
         IO.print("Efternamn: ");
         String surName = Input();
         memberArray[index] = new Member(firstName, surName, memberID );
+        memberID++;
+
 
         IO.println("Du har blivit registrerad " + memberArray[index].getFirstname() + " och ditt medlemsnummer är " +
                 memberArray[index].getID() +"." );
-
-
-
 
 
 
