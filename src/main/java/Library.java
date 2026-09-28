@@ -1,15 +1,19 @@
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Library {
-    static Book[] bookArray = new Book[11];
-    static Member[] memberArray = new Member[10];
-    static int memberID = 1;
-    static int index =0;
+    private static Scanner scanner = new Scanner(System.in);
+    private static Book[] bookArray = new Book[11];
+    private static boolean[] borrowedArray = new boolean[11];
+   private static Member[] memberArray = new Member[10];
+   private static Book[] borrow = new Book[3];
 
-
-    static boolean[] borrowedArray = new boolean[11];
-
+   private static int memberID = 1;
+   private static int index =0;
+   private static int foundCount = 0;
+   private static int i;
+   private static int borrowIndex;
 
     static void main(){
 
@@ -50,14 +54,17 @@ public class Library {
     }
 
     private static String Input() {
-        Scanner scanner = new Scanner(System.in);
+
         String input = scanner.nextLine();
         return input;
 
     }
 
     private static void showStatus() {
-        for (int i = 0; i< bookArray.length-1; i++) {
+        for (int i = 0; i< bookArray.length; i++) {
+            if (bookArray[i] == null) {
+                break;
+            }
             String status;
             if (borrowedArray[i] == false)
                status  = "inne.";
@@ -74,12 +81,12 @@ public class Library {
     }
 
     private static void searchBook() {
-
+        foundCount=0;
         boolean found = false;
         IO.print("Sök på titel eller författare: ");
         String search = (Input().toLowerCase(Locale.ROOT));
 
-        for (int i = 0; i<bookArray.length; i++){
+        for (i = 0; i<bookArray.length; i++){
             if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search)
                     || bookArray[i] != null && bookArray[i].author().toLowerCase(Locale.ROOT).contains(search))
             {
@@ -89,9 +96,15 @@ public class Library {
                 else
                     status = " är utlånad.";
 
+                foundCount++;
 
-                IO.println("Boken " + bookArray[i].title() + " av " + bookArray[i].author() + status);
-                found = true;
+
+                    IO.println(i + ": " + "Boken " + bookArray[i].title() + " av " + bookArray[i].author() + status);
+                borrowIndex= i;
+
+
+
+                    found = true;
             }
         }
 
@@ -106,8 +119,19 @@ public class Library {
 
 
     private static  void borrowBook(){
+        searchBook();
 
 
+           IO.println("Vill du låna boken, tryck j, vill du inte, tryck n.");
+
+           switch ((Input())){
+
+               case "j", "J" -> borrowedArray[borrowIndex] = true;
+
+               case "n", "N" -> IO.println("Boken lånas inte.");
+
+                   default -> IO.println("Ogiltigt val, välj j eller n.");
+           }
 
 
 
@@ -192,7 +216,7 @@ public class Library {
         bookArray[6] = (new Book("Portnoys besvär", "Philip Roth", 1969));
         bookArray[7] = (new Book("Brott och straff", "Fjodor Dostojevskij", 1866));
         bookArray[8] = (new Book("Mästaren och Margarita", "Michail Bulgakov", 1967));
-        bookArray[9] = (new Book("En julsaga", "Charles Dickens", 1843));
+
 
     }
 
