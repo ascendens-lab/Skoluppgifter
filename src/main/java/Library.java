@@ -34,7 +34,7 @@ public class Library {
             IO.println("6. Visa alla böcker och status");
             IO.println("e. Avslut");
 
-            input = IO.readln();
+            input = scanner.nextLine();
 
             switch (input){
                 case "1" -> addBook();
