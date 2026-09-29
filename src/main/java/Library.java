@@ -7,13 +7,14 @@ public class Library {
     private static Book[] bookArray = new Book[11];
     private static boolean[] borrowedArray = new boolean[11];
    private static Member[] memberArray = new Member[10];
-   private static Book[] borrow = new Book[3];
+   private static int[] borrowerArray = new int[11];
+
 
    private static int memberID = 1;
    private static int index =0;
    private static int foundCount = 0;
    private static int i;
-   private static int borrowIndex;
+    private static int borrowIndex;
 
     static void main(){
 
@@ -66,14 +67,23 @@ public class Library {
                 break;
             }
             String status;
-            if (borrowedArray[i] == false)
-               status  = "inne.";
-            else
+            if (borrowedArray[i] == false) {
+                status = "inne.";
+                IO.println("Boken " + bookArray[i].title() + " är " + status);
+            }
+            else if (borrowedArray[i] == true) {
                 status = "utlånad.";
 
+                for (int memberIndex = 0; memberIndex < memberArray.length; memberIndex++) {
+                    if (memberArray[memberIndex] != null &&
+                            memberArray[memberIndex].getID() == borrowerArray[i]) {
 
-            IO.println("Boken " + bookArray[i].title() + " är " + status);
-
+                        IO.println("Boken " + bookArray[i].title()
+                                + " är " + status
+                                + " till " + memberArray[memberIndex].getFirstname());
+                    }
+                }
+            }
         }
 
 
@@ -115,6 +125,32 @@ public class Library {
     }
 
     private static void returnBook() {
+        foundCount=0;
+        boolean found = false;
+        IO.print("Titel på boken du vill lämna tillbaka: ");
+        String search = (Input().toLowerCase(Locale.ROOT));
+
+        for (i = 0; i<bookArray.length; i++){
+            if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search))
+            {
+
+                if (borrowedArray[i]== true) {
+                    borrowedArray[i] = false;
+                    IO.println(bookArray[i].title() + " är registrerad som återlämnad.");
+                }
+                else
+                     IO.println(bookArray[i].title() + " är inte utlånad.");
+
+                found = true;
+                break;
+
+            }
+        }
+
+        if (!found) {
+            IO.println("Boken kunde inte hittas.");
+        }
+
     }
 
 
@@ -123,6 +159,8 @@ public class Library {
 
 
            IO.println("Vill du låna boken, tryck j, vill du inte, tryck n.");
+
+
 
            switch ((Input())){
 
@@ -133,8 +171,12 @@ public class Library {
                    default -> IO.println("Ogiltigt val, välj j eller n.");
            }
 
+           if(borrowedArray[borrowIndex]) {
+               IO.println("Ange medlemsnummer: ");
+               int memberID = scanner.nextInt();
+               borrowerArray[borrowIndex] = memberID;
 
-
+           }
  }
     private static void registerMember() {
 
@@ -150,7 +192,7 @@ public class Library {
         String firstName = Input();
         IO.print("Efternamn: ");
         String surName = Input();
-        memberArray[index] = new Member(firstName, surName, memberID );
+        memberArray[index] = new Member(firstName, surName, memberID);
         memberID++;
 
 
@@ -219,9 +261,6 @@ public class Library {
 
 
     }
-
-
-
 
     record Book(String title, String author, int published){}
 

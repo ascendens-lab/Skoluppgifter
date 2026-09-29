@@ -1,14 +1,13 @@
 public class Member {
 
     private String firstName;
-    private String  surName;
     private int memberID;
+    private boolean borrowedBy = false;
 
 
 
     public Member(String f,String s,int memberID){
         this.firstName=f;
-        this.surName=s;
         this.memberID= memberID;
 
 
@@ -19,15 +18,15 @@ public class Member {
 
     }
 
-    public String getsurName(){
-        return  surName;
-    }
 
     public int getID(){
         return memberID;
     }
+    public boolean getborrowedBY(){
+        return borrowedBy;
+    }
 
-   }
+}
 
 
 
