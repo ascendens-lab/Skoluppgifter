@@ -6,7 +6,7 @@ public class Library {
     private static Scanner scanner = new Scanner(System.in);
     private static Book[] bookArray = new Book[11];
     private static boolean[] borrowedArray = new boolean[11];
-   private static Member[] memberArray = new Member[10];
+   private static Member[] memberArray = new Member[1];
    private static int[] borrowerArray = new int[11];
 
 
@@ -24,6 +24,7 @@ public class Library {
 
         String input;
         do{
+            IO.println("====================");
             IO.println("Bibliotekshanteraren");
             IO.println("====================");
             IO.println("1. Lägg till bok");
@@ -79,8 +80,7 @@ public class Library {
                             memberArray[memberIndex].getID() == borrowerArray[i]) {
 
                         IO.println("Boken " + bookArray[i].title()
-                                + " är " + status
-                                + " till " + memberArray[memberIndex].getFirstname());
+                                + " är utlånad till " + memberArray[memberIndex].getFirstname() + " " + memberArray[memberIndex].getSurname());
                     }
                 }
             }
@@ -172,9 +172,31 @@ public class Library {
            }
 
            if(borrowedArray[borrowIndex]) {
-               IO.println("Ange medlemsnummer: ");
-               int memberID = scanner.nextInt();
-               borrowerArray[borrowIndex] = memberID;
+               boolean tryAgain = true;
+               while (tryAgain) {
+                   IO.println("Ange medlemsnummer: ");
+
+                   try {
+                       int memberID = scanner.nextInt();
+
+                       if (memberID >= memberArray.length +1 || memberID < 0) {
+                           IO.print("Ogiltigt medlemsnummer. Ange ditt medlemsnummer");
+
+
+                           }
+                       else {
+                           borrowerArray[borrowIndex] = memberID;
+                           tryAgain = false;
+                       }
+                   } catch (InputMismatchException e) {
+                       scanner.nextLine();
+                       IO.print("Felaktigt medlemsnummer, försök igen.");
+                   }
+
+               }
+
+
+
 
            }
  }
