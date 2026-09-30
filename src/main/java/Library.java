@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Library {
     private static Scanner scanner = new Scanner(System.in);
-    private static Book[] bookArray = new Book[11];
-    private static boolean[] borrowedArray = new boolean[11];
-   private static Member[] memberArray = new Member[1];
-   private static int[] borrowerArray = new int[11];
+    private static Book[] bookArray = new Book[10];
+    private static boolean[] borrowedArray = new boolean[10];
+   private static Member[] memberArray = new Member[10];
+   private static int[] borrowerArray = new int[10];
 
 
    private static int memberID = 1;
