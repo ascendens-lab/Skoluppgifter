@@ -12,9 +12,8 @@ public class Library {
 
    private static int memberID = 1;
    private static int index =0;
-   private static int foundCount = 0;
    private static int i;
-    private static int borrowIndex;
+   private static int borrowIndex;
 
     static void main(){
 
@@ -50,15 +49,13 @@ public class Library {
 
             }
 
-        } while (!input.equals("e"));
+        } while (true);
 
-        Input();
-    }
+        }
 
-    private static String Input() {
+    private static String input() {
 
-        String input = scanner.nextLine();
-        return input;
+        return scanner.nextLine();
 
     }
 
@@ -91,10 +88,10 @@ public class Library {
     }
 
     private static void searchBook() {
-        foundCount=0;
+        int foundCount=0;
         boolean found = false;
         IO.print("Sök på titel eller författare: ");
-        String search = (Input().toLowerCase(Locale.ROOT));
+        String search = (input().toLowerCase(Locale.ROOT));
 
         for (i = 0; i<bookArray.length; i++){
             if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search)
@@ -125,10 +122,10 @@ public class Library {
     }
 
     private static void returnBook() {
-        foundCount=0;
+        int foundCount=0;
         boolean found = false;
         IO.print("Titel på boken du vill lämna tillbaka: ");
-        String search = (Input().toLowerCase(Locale.ROOT));
+        String search = (input().toLowerCase(Locale.ROOT));
 
         for (i = 0; i<bookArray.length; i++){
             if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search))
@@ -162,7 +159,7 @@ public class Library {
 
 
 
-           switch ((Input())){
+           switch ((input())){
 
                case "j", "J" -> borrowedArray[borrowIndex] = true;
 
@@ -179,7 +176,7 @@ public class Library {
                    try {
                        int memberID = scanner.nextInt();
 
-                       if (memberID >= memberArray.length +1 || memberID < 0) {
+                       if (memberID > index +1|| memberID < 1) {
                            IO.print("Ogiltigt medlemsnummer. Ange ditt medlemsnummer");
 
 
@@ -211,9 +208,9 @@ public class Library {
         }
 
         IO.print("Förnamn: ");
-        String firstName = Input();
+        String firstName = input();
         IO.print("Efternamn: ");
-        String surName = Input();
+        String surName = input();
         memberArray[index] = new Member(firstName, surName, memberID);
         memberID++;
 
@@ -238,16 +235,16 @@ public class Library {
        }
 
         IO.print("Ange titel på boken:  ");
-        String title = Input();
+        String title = input();
 
         IO.print("Ange författare till boken:  ");
-        String author = Input();
+        String author = input();
 
         IO.print("Ange utgivningsår för boken:  ");
         int published;
 
         try {
-            published = Integer.parseInt(Input());
+            published = Integer.parseInt(input());
         } catch (NumberFormatException e) {
             IO.println("Du måste ange år med siffror.");
             return;
