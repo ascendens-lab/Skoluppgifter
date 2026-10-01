@@ -4,17 +4,17 @@ import java.util.Scanner;
 
 public class Library {
     private static Scanner scanner = new Scanner(System.in);
-    private static Book[] bookArray = new Book[10];
-    private static boolean[] bookBorrowed = new boolean[10];
+    private static Book[] bookArray = new Book[10];//Skapar en array för böcker.
+    private static boolean[] bookBorrowed = new boolean[10];//Skapar en array för att hålla reda på vilka böcker som är lånade.
    private static Member[] memberArray = new Member[10];
-   private static int[] bookBorrower = new int[10];
+   private static int[] bookBorrower = new int[10];//Skapar en lista för att hålla reda på hur många böcker
 
 
    private static int memberID = 1;
    private static int index =0;
    private static int i;
    private static int borrowIndex;
-   private static boolean found = false;
+   private static boolean found = false;//Variabel som initinerar sökvärdet till searchBook.
 
     static void main(){
 
@@ -156,7 +156,7 @@ public class Library {
 
     private static  void borrowBook(){
         searchBook();
-
+        //Hittas inte boken under sökningen så avbryts metoden här.
         if (!found)
             return;
 

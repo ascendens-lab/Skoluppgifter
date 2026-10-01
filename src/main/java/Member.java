@@ -8,7 +8,8 @@ public class Member {
 
 
 
-    public Member(String f, String s, int memberID){
+    public Member(String f, String s, int memberID){//Konstruerar datatypen Member som bestämmer vad vilken data som varje
+                                                    //låntagare ska innehåll. .
         this.firstName=f;
         this.surName=s;
         this.memberID= memberID;
@@ -31,11 +32,11 @@ public class Member {
     public int getActiveLoans(){
         return activeLoans;
     }
-    public boolean canBorrowMore() {
+    public boolean canBorrowMore() {//Sätter gränsen för hur många böcker varje låntagare på låna åt gången.
         return activeLoans < 3;
     }
 
-    public void setActiveLoans(int activeLoans) {
+    public void setActiveLoans(int activeLoans) {//Uppdaterar hur många aktiva lån låntagaren har.
         this.activeLoans = activeLoans;
     }
 }
