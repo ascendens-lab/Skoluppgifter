@@ -98,8 +98,9 @@ public class Library {
                     || bookArray[i] != null && bookArray[i].author().toLowerCase(Locale.ROOT).contains(search))
             {
                 String status;
-                if (borrowedArray[i]== false)
+                if (borrowedArray[i]== false){
                 status= " finns inne.";
+                }
                 else
                     status = " är utlånad.";
 
@@ -122,7 +123,7 @@ public class Library {
     }
 
     private static void returnBook() {
-        int foundCount=0;
+
         boolean found = false;
         IO.print("Titel på boken du vill lämna tillbaka: ");
         String search = (input().toLowerCase(Locale.ROOT));
@@ -131,7 +132,7 @@ public class Library {
             if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search))
             {
 
-                if (borrowedArray[i]== true) {
+                if (borrowedArray[i]) {
                     borrowedArray[i] = false;
                     IO.println(bookArray[i].title() + " är registrerad som återlämnad.");
                 }
