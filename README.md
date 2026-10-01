@@ -28,5 +28,7 @@ fanns. Det gjorde det hela mer rörigt än det hade behövt vara, vilket gjorde 
 
 Jag har även tvingats inse att det är bra att lägga tid på att skriva kommentarer
 om vad koden gör. Det gör det förhoppningsvis lättare att förstå hur olika delar 
-hänger ihop och att hitta var felen uppstår.
+hänger ihop och att hitta var felen uppstår. Även namngivningen av arrayer kunde
+varit tydligare då jag blandade ihop dem ibland. Jag har ändrat efter men det kunde
+jag också ha lagt tid på under arbetet.
 

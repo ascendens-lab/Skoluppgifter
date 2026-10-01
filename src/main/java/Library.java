@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Library {
     private static Scanner scanner = new Scanner(System.in);
     private static Book[] bookArray = new Book[10];
-    private static boolean[] borrowedArray = new boolean[10];
+    private static boolean[] bookBorrowed = new boolean[10];
    private static Member[] memberArray = new Member[10];
-   private static int[] borrowerArray = new int[10];
+   private static int[] bookBorrower = new int[10];
 
 
    private static int memberID = 1;
@@ -66,16 +66,16 @@ public class Library {
                 break;
             }
             String status;
-            if (borrowedArray[i] == false) {
+            if (bookBorrowed[i] == false) {
                 status = "inne.";
                 IO.println("Boken " + bookArray[i].title() + " är " + status);
             }
-            else if (borrowedArray[i] == true) {
+            else if (bookBorrowed[i] == true) {
                 status = "utlånad.";
 
                 for (int memberIndex = 0; memberIndex < memberArray.length; memberIndex++) {
                     if (memberArray[memberIndex] != null &&
-                            memberArray[memberIndex].getID() == borrowerArray[i]) {
+                            memberArray[memberIndex].getID() == bookBorrower[i]) {
 
                         IO.println("Boken " + bookArray[i].title()
                                 + " är utlånad till " + memberArray[memberIndex].getFirstname() + " " + memberArray[memberIndex].getSurname());
@@ -99,7 +99,7 @@ public class Library {
                     || bookArray[i] != null && bookArray[i].author().toLowerCase(Locale.ROOT).contains(search))
             {
                 String status;
-                if (borrowedArray[i]== false){
+                if (bookBorrowed[i]== false){
                 status= " finns inne.";
                 }
                 else
@@ -134,8 +134,8 @@ public class Library {
             if (bookArray[i] != null && bookArray[i].title().toLowerCase(Locale.ROOT).contains(search))
             {
 
-                if (borrowedArray[i]) {
-                    borrowedArray[i] = false;
+                if (bookBorrowed[i]) {
+                    bookBorrowed[i] = false;
                     IO.println(bookArray[i].title() + " är registrerad som återlämnad.");
                 }
                 else
@@ -168,7 +168,7 @@ public class Library {
 
            switch ((input())){
 
-               case "j", "J" -> borrowedArray[borrowIndex] = true;
+               case "j", "J" -> bookBorrowed[borrowIndex] = true;
 
                case "n", "N" -> IO.println("Boken lånas inte.");
 
@@ -191,7 +191,7 @@ public class Library {
 
 
 
-        if(borrowedArray[borrowIndex]) {
+        if(bookBorrowed[borrowIndex]) {
                boolean tryAgain = true;
                while (tryAgain) {
                    IO.print("Ange medlemsnummer: ");
@@ -217,12 +217,12 @@ public class Library {
 
                            if (member.canBorrowMore()) {
                                member.setActiveLoans(member.getActiveLoans() + 1);
-                               borrowerArray[borrowIndex] = memberID;
+                               bookBorrower[borrowIndex] = memberID;
                                tryAgain = false;
                            } else {
                                IO.println("Man får bara låna tre böcker åt gången. Lämna tillbaks en annan bok om du" +
                                        " vill låna den här.");
-                               borrowedArray[borrowIndex] = false;
+                               bookBorrowed[borrowIndex] = false;
                                tryAgain = false;
 
                            }
