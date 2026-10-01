@@ -14,6 +14,7 @@ public class Library {
    private static int index =0;
    private static int i;
    private static int borrowIndex;
+   private static boolean found = false;
 
     static void main(){
 
@@ -89,7 +90,7 @@ public class Library {
 
     private static void searchBook() {
         int foundCount=0;
-        boolean found = false;
+
         IO.print("Sök på titel eller författare: ");
         String search = (input().toLowerCase(Locale.ROOT));
 
@@ -117,7 +118,8 @@ public class Library {
         }
 
         if (!found) {
-            IO.println("Boken kunde inte hittas.");
+             IO.println("Boken kunde inte hittas.");
+
         }
 
     }
@@ -155,6 +157,10 @@ public class Library {
     private static  void borrowBook(){
         searchBook();
 
+        if (!found)
+            return;
+
+
 
            IO.println("Vill du låna boken, tryck j, vill du inte, tryck n.");
 
@@ -169,10 +175,26 @@ public class Library {
                    default -> IO.println("Ogiltigt val, välj j eller n.");
            }
 
-           if(borrowedArray[borrowIndex]) {
+        boolean hasMember = false;
+
+        for (Member member : memberArray) {
+            if (member != null) {
+                hasMember = true;
+                break;
+            }
+        }
+
+        if (!hasMember) {
+            IO.println("Det finns inga registrerade medlemmar.");
+            return;
+        }
+
+
+
+        if(borrowedArray[borrowIndex]) {
                boolean tryAgain = true;
                while (tryAgain) {
-                   IO.println("Ange medlemsnummer: ");
+                   IO.print("Ange medlemsnummer: ");
 
                    try {
                        int memberID = scanner.nextInt();
@@ -183,23 +205,44 @@ public class Library {
 
                            }
                        else {
-                           borrowerArray[borrowIndex] = memberID;
-                           tryAgain = false;
+
+                           Member member = null;
+
+                           for (int i = 0; i < memberArray.length; i++) {
+                               if (memberArray[i] != null && memberArray[i].getID() == memberID) {
+                                   member = memberArray[i];
+                                   break;
+                               }
+                           }
+
+                           if (member.canBorrowMore()) {
+                               member.setActiveLoans(member.getActiveLoans() + 1);
+                               borrowerArray[borrowIndex] = memberID;
+                               tryAgain = false;
+                           } else {
+                               IO.println("Man får bara låna tre böcker åt gången. Lämna tillbaks en annan bok om du" +
+                                       " vill låna den här.");
+                               borrowedArray[borrowIndex] = false;
+                               tryAgain = false;
+
+                           }
                        }
                    } catch (InputMismatchException e) {
                        scanner.nextLine();
                        IO.print("Felaktigt medlemsnummer, försök igen.");
+
                    }
 
-               }
+                   }
 
+                          }
 
-
-
-           }
  }
     private static void registerMember() {
-
+        if(memberID>memberArray.length) {
+            IO.println("Det går inte att lägga till fler medlemmar.");
+            return;
+        }
 
         for (int i = 0; i < memberArray.length; i++) {
             if (memberArray[i] == null) {
